@@ -115,101 +115,55 @@ Time frames are also key in the development cycle. You have limited time to code
 ## Additional Libraries
 
 - Vue.js (DOM manipulation, fetch requests from the backend, display)
-- Bootstrap (design, light responsiveness, display)
-- D3.js (data visualization, creating responsive table & pie chart)
-- jQuery (Bootstrap functionality)
+- Buefy (design, light responsiveness, display)
+- Python (Django) (data visualization, creating responsive table & pie chart)
+- BeautifulSoup (post-MVP image scraping)
 
 ## Code Snippet
 
 Use this section to include a brief code snippet of functionality that you are proud of an a brief description
 
 ```
-handleSignup: function () {
-      const URL = this.prodURL ? this.prodURL : this.devURL;
-      const user = JSON.stringify({
-        username: this.createUN,
-        password: this.createPW,
-      });
-      fetch(`${URL}/users`, {
-        method: "post",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: user,
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.error) {
-            alert("sign up unsuccessful");
-          } else {
-            alert("signup successful");
-            this.user = data.user;
-            this.token = data.token;
-            this.loggedin = true;
-            budget.loggedin = true;
-            expense.loggedin = true;
-            expense.heading = `${login.user.username}'s Budget`;
-            this.loginPW = "";
-            this.loginUN = "";
-            budget.createBudget(data);
-            budget.userBudget();
-          }
-        });
-    }
+snippet2
 ```
 
 ```
-rows
-    .selectAll("td.update")
-    // use a class so you don't re-select the existing <td> elements
-    .data(function (d) {
-      return [d];
-    })
-    .enter()
-    .append("td")
-    .attr("data-toggle", "modal")
-    .attr("data-target", "#updateExpenseModal")
-    .append("button")
-    .attr("class", "update")
-    .attr("id", function (d) {
-      return d.id;
-    })
-    .text("update")
-    .on("click", assignID);
-
+snippet1
 ```
 
 ## Issues and Resolutions
 
 Use this section to list of all major issues encountered and their resolution.
 
-**ERROR**: BootstrapVue library had difficulty importing properly 
-**RESOLUTION**: Kept jQuery library for MVP, will refactor to write Bootstrap functionality in vanilla JS
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: Cannot use vanilla JS files in a project also using Vue.js
-**RESOLUTION**: kept jQuery library for MVP, will refactor to try vanilla JS as Vue.js methods
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: generating tables & charts in D3.js from fetch data  
-**RESOLUTION**: DOM manipulation with D3.js
+**ERROR**:   
+**RESOLUTION**: 
 
-**ERROR**: Display buttons on login & signup
-**RESOLUTION**: use v-if in HTML
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: Have users be automatically logged in once signed up
-**RESOLUTION**: call handleLogin in handleSignup
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: Generate a budget under the hood upon signup
-**RESOLUTION**: call createBudget function in handleSignup
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: Display the user-specific budget & expenses upon signup
-**RESOLUTION**: create a Vue method to get budget by user ID
+**ERROR**: 
+**RESOLUTION**: 
 
-**ERROR**: Resizing D3 svg responsively
-**RESOLUTION**: use viewBox attribute
+**ERROR**: 
+**RESOLUTION**:
 
-**ERROR**: Font Awesome icons not displaying on table buttons (attempt at fitting table to mobile view)
-**RESOLUTION**: `<i>` and `<button>` don't work well together (EITHER `<i>` with `<a>` OR `<span>` with `<button>`), so horizontal scroll bar added to table
+**ERROR**: 
+**RESOLUTION**: 
 
 
-**ERROR**: Mixed content warning for D3.js libraries
-**RESOLUTION**: Deployed front-end on `surge.sh` instead of `Netlify` or `github.io`
+**ERROR**: When logging into frontend: `Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0`
+
+**RESOLUTION**: 
+
