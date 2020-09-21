@@ -5,8 +5,12 @@
     </div>
     <div id="main">
       <!--Sidebar/-->
+      <Link v-bind:loggedin="loggedin"
+      />
 
-      <router-view/>
+      <router-view
+       @loggedin="login"
+      />
     </div>
     <Footer/>
   </div>
@@ -23,6 +27,17 @@ export default {
     Header,
     //Sidebar,
     Footer
+  },
+  data() {
+    return {
+      loggedin: false
+    }
+  },
+  methods: {
+    login: function(event){
+      console.log(event)
+      this.loggedin = true
+    }
   }
   
 }

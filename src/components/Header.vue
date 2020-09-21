@@ -13,18 +13,20 @@
         <b-navbar-item href="#">
           <router-link to="/Page2">About</router-link>
         </b-navbar-item>
-        <b-navbar-dropdown label="Your lists" aria-role="list" scrollable="true">
-            <!--b-navbar-dropdown-item 
-              aria-role="listitem"
+        <b-navbar-dropdown 
+              label="Your lists" 
+              aria-role="list" scrollable="true">
+            <b-navbar-dropdown-item 
               v-for="list in listoflists"
-              :key="list.name"
+              :key="list.name" 
+              aria-role="listitem"
               v-model="listname"
             >
               {{list.name}}
             </b-navbar-dropdown-item>
 
             <b-navbar-dropdown-item aria-role="listitem">Another action</b-navbar-dropdown-item>
-            <b-navbar-dropdown-item aria-role="listitem">Something else</b-navbar-dropdown-item-->
+            <b-navbar-dropdown-item aria-role="listitem">Something else</b-navbar-dropdown-item>
         </b-navbar-dropdown>
       </template>
 
@@ -111,45 +113,6 @@
                 class="delete"
                 @click="isRegisterModalActive=false"/>
             </header>
-            <section class="modal-card-body">
-                <b-field label="firstname">
-                    <b-input v-model="firstname"></b-input>
-                </b-field>
-
-                <b-field label="lastname">
-                    <b-input v-model="lastname"></b-input>
-                </b-field>
-
-                <b-field label="Email"
-                    type="is-success"
-                    message="Remember to use a valid email">
-                    <b-input type="email"
-                        value=""
-                        maxlength="30"
-                        v-model="email">
-                    </b-input>
-                </b-field>
-
-                <b-field label="Username"
-                    type="is-success"
-                    message="Make a username up to 30 characters">
-                    <b-input value="" maxlength="30"
-                    v-model="username"></b-input>
-                </b-field>
-
-                <b-field label="Password"
-                  type="is-success"
-                  message="Password must be at least 8 characters long">
-                    <b-input type="password"
-                        value=""
-                        password-reveal
-                        placeholder="Your password"
-                        v-model="password">
-                    </b-input>
-                </b-field>
-
-              <b-checkbox>Remember me</b-checkbox>
-            </section>
             <footer class="modal-card-foot">
                 <button class="button" type="button" @click="isRegisterModalActive=false">Close</button>
                 <button class="button is-primary" v-on:click="register()">Register</button>
@@ -157,6 +120,47 @@
           </div>
         </form>
       </b-modal>
+    </section>
+
+    <section>
+      <b-field label="Name" :label-position="labelPosition">
+        <b-input value="Kevin Garvey"></b-input>
+      </b-field>
+
+      <b-field label="Email"
+        :label-position="labelPosition"
+        type="is-danger"
+        message="This email is invalid">
+          <b-input type="email"
+              value="john@"
+              maxlength="30">
+          </b-input>
+      </b-field>
+
+      <b-field label="Username"
+          :label-position="labelPosition"
+          type="is-success"
+          message="This username is available">
+          <b-input value="johnsilver" maxlength="30"></b-input>
+      </b-field>
+
+      <b-field label="Password"
+          :label-position="labelPosition"
+          type="is-warning">
+          <b-input value="123" type="password" maxlength="30"></b-input>
+          <template slot="message">
+              <div>Password is too short</div>
+              <div>Password must have at least 8 characters</div>
+          </template>
+      </b-field>
+
+      <!--b-field label="Subject"
+          :label-position="labelPosition">
+          <b-select placeholder="Select a subject">
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+          </b-select>
+      </b-field-->
     </section>
 
   </div>
@@ -175,10 +179,10 @@
         password: "",
         loggedin: "",
         token: "",
-        listname: ""
+        listname: "",
+        listoflists: [],
       }
     },
-    // beforeCreate: this.populateLists(),
     methods: {
       logIn: function() {
         // const URL = this.$prodURL ? this.$prodURL : this.$URL
@@ -201,6 +205,7 @@
         .then(data => {
           console.log('data', data)
           if(data){
+            this.populateLists(),
             this.$emit('loggedin', data)
             this.token = data.token,
             this.username = '',
@@ -266,21 +271,24 @@
           }
         })
         .then((response) => {
+          console.log(response)
           if (response.status != 200) {
             response.status
+            console.log(response.status)
           } else {
             return response.json()
           }
         })
         .then(data => {
           if (data){
+            console.log("data: ", data)
             this.listoflists = data
           } else {
-            return("No lists found for this user. Create a new list?")
+            console.log("No lists found for this user. Create a new list?")
           } 
         })
       }
-    }
+    },
   }
 </script>
 
