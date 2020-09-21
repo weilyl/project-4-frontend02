@@ -1,6 +1,6 @@
 <template>
-  <div class="header">
-    <b-navbar>
+  <div class="header"> <!---_________START OF HEADER DIV_________-->
+    <b-navbar> <!---_________START OF BUEFY NAVBAR_________-->
       <template slot="brand">
         <b-navbar-item tag="router-link" :to="{ path: '/' }">
           <div>On The Hook</div>
@@ -45,9 +45,9 @@
           </div>
         </b-navbar-item>
       </template>
-    </b-navbar>
+    </b-navbar> <!---_________END OF BUEFY NAVBAR_________-->
 
-    <section>
+    <section> <!---_________START OF BUEFY LOGIN MODAL_________-->
       <b-modal 
           v-model="isComponentModalActive"
           has-modal-card
@@ -94,9 +94,9 @@
           </div>
         </form>
       </b-modal>
-    </section>
+    </section> <!--_________END OF BUEFY LOGIN MODAL_________-->
 
-    <section>
+    <section> <!--_________START OF BUEFY REGISTER MODAL_________-->
       <b-modal 
           v-model="isRegisterModalActive"
           has-modal-card
@@ -113,6 +113,45 @@
                 class="delete"
                 @click="isRegisterModalActive=false"/>
             </header>
+            <section class="modal-card-body">
+                <b-field label="firstname">
+                    <b-input v-model="firstname"></b-input>
+                </b-field>
+
+                <b-field label="lastname">
+                    <b-input v-model="lastname"></b-input>
+                </b-field>
+
+                <b-field label="Email"
+                    type="is-success"
+                    message="Remember to use a valid email">
+                    <b-input type="email"
+                        value=""
+                        maxlength="30"
+                        v-model="email">
+                    </b-input>
+                </b-field>
+
+                <b-field label="Username"
+                    type="is-success"
+                    message="Make a username up to 30 characters">
+                    <b-input value="" maxlength="30"
+                    v-model="username"></b-input>
+                </b-field>
+
+                <b-field label="Password"
+                  type="is-success"
+                  message="Password must be at least 8 characters long">
+                    <b-input type="password"
+                        value=""
+                        password-reveal
+                        placeholder="Your password"
+                        v-model="password">
+                    </b-input>
+                </b-field>
+
+              <b-checkbox>Remember me</b-checkbox>
+            </section>
             <footer class="modal-card-foot">
                 <button class="button" type="button" @click="isRegisterModalActive=false">Close</button>
                 <button class="button is-primary" v-on:click="register()">Register</button>
@@ -120,9 +159,9 @@
           </div>
         </form>
       </b-modal>
-    </section>
+    </section> <!--_________END OF BUEFY REGISTER MODAL_________-->
 
-    <section>
+    <section> <!---section repurposed to add link to a list-->
       <b-field label="Name" :label-position="labelPosition">
         <b-input value="Kevin Garvey"></b-input>
       </b-field>
@@ -163,11 +202,10 @@
       </b-field-->
     </section>
 
-  </div>
+  </div> <!---_________END OF HEADER DIV_________-->
 </template>
 
 <script>
-  // import Register from './Register'
 
   export default {
     name: 'Header',
@@ -205,7 +243,6 @@
         .then(data => {
           console.log('data', data)
           if(data){
-            this.populateLists(),
             this.$emit('loggedin', data)
             this.token = data.token,
             this.username = '',
@@ -214,7 +251,8 @@
             this.isComponentModalActive = false,
             this.firstname = '',
             this.lastname='',
-            this.email = ''
+            this.email = '',
+            this.populateLists()
           } else {
             alert('Incorrect Login')
           }

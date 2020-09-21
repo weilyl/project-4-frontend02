@@ -5,11 +5,8 @@
     </div>
     <div id="main">
       <!--Sidebar/-->
-      <Link v-bind:loggedin="loggedin"
-      />
-
+      <!--@loggedin="login(event)" placeholder for component-->
       <router-view
-       @loggedin="login"
       />
     </div>
     <Footer/>
@@ -19,10 +16,11 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
-//import Sidebar from './components/Sidebar'
+//import Sidebar from './components/Sidebar
 
 export default {
   name: 'App',
+  // props: ["loggedin"],
   components: {
     Header,
     //Sidebar,
@@ -30,14 +28,14 @@ export default {
   },
   data() {
     return {
-      loggedin: false
+      // loggedin: false
     }
   },
   methods: {
-    login: function(event){
-      console.log(event)
-      this.loggedin = true
-    }
+    // login: function(event){
+    //   console.log(event)
+    //   this.loggedin = true
+    // }
   }
   
 }
@@ -64,7 +62,10 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-
+Footer {
+  width: 100%;
+  bottom: 0;
+}
 </style>
 
 <!--#main {
