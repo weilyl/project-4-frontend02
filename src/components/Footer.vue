@@ -18,6 +18,12 @@ export default {
 }
 </script>
 
+<!--footer positioning CSS from Kenal-->
 <style>
-
+footer {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    overflow:hidden;
+}
 </style>

@@ -159,11 +159,13 @@ Use this section to list of all major issues encountered and their resolution.
 **ERROR**: 
 **RESOLUTION**:
 
-**ERROR**: 
+**ERROR**: When logging in after resolving unexpected JSON token, received this error:
+`Response {type: "cors", url: "http://127.0.0.1:8000/auth/api/users/login/", redirected: false, status: 404, ok: false, …}`
+
 **RESOLUTION**: 
 
 
 **ERROR**: When logging into frontend: `Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0`
 
-**RESOLUTION**: 
+**RESOLUTION**: Needed to `JSON.stringify()` the request body because body was sending as HTML (hence the `<`) [source](https://stackoverflow.com/questions/47368716/fetching-json-returns-error-uncaught-in-promise-syntaxerror-unexpected-token/55628120)
 

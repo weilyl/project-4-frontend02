@@ -4,7 +4,9 @@ import router from "./router";
 import Buefy from "buefy";
 import "buefy/dist/buefy.css";
 
-Vue.prototype.$URL = 'http://127.0.0.1:8000'
+Vue.prototype.$URL = 'http://127.0.0.1:8000/'
+
+Vue.prototype.$prodURL = 'https://goodhooks.herokuapp.com/'
 
 Vue.use(Buefy);
 

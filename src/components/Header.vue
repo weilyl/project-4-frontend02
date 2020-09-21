@@ -13,24 +13,32 @@
         <b-navbar-item href="#">
           <router-link to="/Page2">About</router-link>
         </b-navbar-item>
-        <b-navbar-dropdown label="Info">
-          <b-navbar-item href="#">
-            About
-          </b-navbar-item>
-          <b-navbar-item href="#">
-            Contact
-          </b-navbar-item>
+        <b-navbar-dropdown label="Your lists" aria-role="list" scrollable="true">
+            <!--b-navbar-dropdown-item 
+              aria-role="listitem"
+              v-for="list in listoflists"
+              :key="list.name"
+              v-model="listname"
+            >
+              {{list.name}}
+            </b-navbar-dropdown-item>
+
+            <b-navbar-dropdown-item aria-role="listitem">Another action</b-navbar-dropdown-item>
+            <b-navbar-dropdown-item aria-role="listitem">Something else</b-navbar-dropdown-item-->
         </b-navbar-dropdown>
       </template>
 
       <template slot="end">
         <b-navbar-item tag="div">
           <div class="buttons">
-            <a class="button is-primary">
-              <strong>Sign up</strong>
+            <a class="button is-primary" v-if="!loggedin" v-on:click="isRegisterModalActive = true">
+              <strong style="color: white">Register</strong>
             </a>
-            <a class="button is-light" v-on:click="isComponentModalActive = true">
+            <a class="button is-light" v-if="!loggedin" v-on:click="isComponentModalActive = true">
               Log in
+            </a>
+            <a class="button is-light" v-if="loggedin" v-on:click="logOut()">
+              Log out
             </a>
           </div>
         </b-navbar-item>
@@ -86,64 +94,200 @@
       </b-modal>
     </section>
 
+    <section>
+      <b-modal 
+          v-model="isRegisterModalActive"
+          has-modal-card
+          trap-focus
+          :destroy-on-hide="false"
+          aria-role="dialog"
+          aria-modal>
+        <form action="">
+          <div class="modal-card" style="width: auto">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Login</p>
+              <button
+                type="button"
+                class="delete"
+                @click="isRegisterModalActive=false"/>
+            </header>
+            <section class="modal-card-body">
+                <b-field label="firstname">
+                    <b-input v-model="firstname"></b-input>
+                </b-field>
+
+                <b-field label="lastname">
+                    <b-input v-model="lastname"></b-input>
+                </b-field>
+
+                <b-field label="Email"
+                    type="is-success"
+                    message="Remember to use a valid email">
+                    <b-input type="email"
+                        value=""
+                        maxlength="30"
+                        v-model="email">
+                    </b-input>
+                </b-field>
+
+                <b-field label="Username"
+                    type="is-success"
+                    message="Make a username up to 30 characters">
+                    <b-input value="" maxlength="30"
+                    v-model="username"></b-input>
+                </b-field>
+
+                <b-field label="Password"
+                  type="is-success"
+                  message="Password must be at least 8 characters long">
+                    <b-input type="password"
+                        value=""
+                        password-reveal
+                        placeholder="Your password"
+                        v-model="password">
+                    </b-input>
+                </b-field>
+
+              <b-checkbox>Remember me</b-checkbox>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" type="button" @click="isRegisterModalActive=false">Close</button>
+                <button class="button is-primary" v-on:click="register()">Register</button>
+            </footer>
+          </div>
+        </form>
+      </b-modal>
+    </section>
+
   </div>
 </template>
 
 <script>
+  // import Register from './Register'
 
   export default {
     name: 'Header',
     data() {
       return {
         isComponentModalActive: false,
+        isRegisterModalActive: false,
         username: "",
-        password: ""
+        password: "",
+        loggedin: "",
+        token: "",
+        listname: ""
       }
     },
+    // beforeCreate: this.populateLists(),
     methods: {
       logIn: function() {
-        console.log(this.username, this.password)
-        console.log(this.$URL)
-        fetch(`http://127.0.0.1:8000/auth/api/users/login/`, {
+        // const URL = this.$prodURL ? this.$prodURL : this.$URL
+        const user = {username: this.username, password: this.password}
+        fetch(`${this.$URL}auth/users/login/`, {
           method: "POST",
-            body: {
-                username: this.username,
-                password: this.password
-            },
+            body: JSON.stringify(user),
             headers: {
                 "Content-Type": "application/json",
             }
         })
-        .then((response) => response.json())
-        .then((data) => this.$emit('loggedin', data))
+        // following code block courtesy of Narissa
+        .then((response) => {
+          if (response.status != 200) {
+            response.status
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          console.log('data', data)
+          if(data){
+            this.$emit('loggedin', data)
+            this.token = data.token,
+            this.username = '',
+            this.password = '',
+            this.loggedin = true,
+            this.isComponentModalActive = false,
+            this.firstname = '',
+            this.lastname='',
+            this.email = ''
+          } else {
+            alert('Incorrect Login')
+          }
+        })  
+      },
+      logOut: function() {
+        this.loggedin = false,
+        this.token = '',
+        this.username = '',
+        this.password = '', 
+        this.firstname = '',
+        this.listoflists = []
+      },
+      register: function() {
+        const user = {
+          username: this.username, 
+          password: this.password, 
+          first_name: this.firstname,
+          last_name: this.username,
+          email: this.email          
+        }
+        fetch(`${this.$URL}auth/users/register/`, {
+          method: "POST",
+          body: JSON.stringify(user),
+          headers: {
+              "Content-Type": "application/json",
+          }
+        })
+        // following code block courtesy of Narissa
+        .then((response) => {
+          if (response.status != 201) {
+            response.status
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          console.log('data', data)
+          if(data){
+            this.$emit('loggedin', data) // do I even need this?
+            this.token = data.token,
+            this.loggedin = true,
+            this.isRegisterModalActive = false
+          } else {
+            alert('Incorrect Registration Info')
+          }
+        })  
+      }, 
+      populateLists: function(){
+        fetch(`${this.$URL}auth/api/lists/`, {
+          method: "GET",
+          headers: {
+            "Authorization": `JWT ${this.token}`
+          }
+        })
+        .then((response) => {
+          if (response.status != 200) {
+            response.status
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          if (data){
+            this.listoflists = data
+          } else {
+            return("No lists found for this user. Create a new list?")
+          } 
+        })
       }
     }
   }
-
-
-// then(response => {
-//         if (response.status != 200) {
-//           response.json()
-//         } else {
-//           return response.json()
-//         }
-//       })
-//       .then(data => {
-//         console.log('data', data)
-//         if(data){
-//           this.$emit('loggedIn', data)
-//         } else {
-//           alert('Incorrect Login')
-//         }
-//       })
-
-
 </script>
 
 <style>
 .header {
-    width: 90%;
-    margin: 10px auto
+  width: 90%;
+  margin: 10px auto
 }
 
 </style>

@@ -1,13 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <Header/>
-
-      
+      <Header/>  
     </div>
+    <div id="main">
+      <!--Sidebar/-->
 
-    <router-view/>
-    
+      <router-view/>
+    </div>
     <Footer/>
   </div>
 </template>
@@ -15,11 +15,13 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
+//import Sidebar from './components/Sidebar'
 
 export default {
   name: 'App',
   components: {
     Header,
+    //Sidebar,
     Footer
   }
   
@@ -47,4 +49,12 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
+
 </style>
+
+<!--#main {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}-->
