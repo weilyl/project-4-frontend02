@@ -4,8 +4,7 @@
       <Header/>  
     </div>
     <div id="main">
-      <!--Sidebar/-->
-      <!--@loggedin="login(event)" placeholder for component-->
+
       <router-view
       />
     </div>
@@ -16,14 +15,12 @@
 <script>
 import Header from './components/Header'
 import Footer from './components/Footer'
-//import Sidebar from './components/Sidebar
 
 export default {
   name: 'App',
   // props: ["loggedin"],
   components: {
     Header,
-    //Sidebar,
     Footer
   },
   data() {
