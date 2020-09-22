@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    Stay on the hook
+    You're on the hook
     <HelloWorld msg="Greetings, fellow humans"/>
   </div>
 </template>

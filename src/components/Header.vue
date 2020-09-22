@@ -12,7 +12,7 @@
         </b-navbar-item>
 
         <b-navbar-item href="#" 
-          v-on:click="isNewListModalActive = true"
+          v-on:click="isNewListModalActive= true"
           v-if="loggedin">
           <router-link to="/">Create a new list</router-link>
         </b-navbar-item>
@@ -29,17 +29,16 @@
               v-if="loggedin">
             <b-dropdown-item 
               v-for="list in listoflists"
-              :key="list.name" 
+              :id="list.id" 
+              :key="list.name"
               aria-role="listitem"
               v-model="listname"
-              tag="router-link"
-              :to="'/lists/'+`${list.name}`"
+              v-on:click="openOneListModal(id)"
+              tag="router-link" :to="{ path: '/list/'+ id }"
             >
               {{list.name}}
             </b-dropdown-item>
 
-            <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
-            <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
         </b-navbar-dropdown>
       </template>
 
@@ -275,6 +274,46 @@
       </b-modal>
     </section> <!--_________END OF NEW LINK MODAL_________-->
 
+    <section> <!---_________START OF BUEFY SINGLE LINK MODAL_________-->
+      <b-modal 
+          v-model="isOneListModalActive"
+          has-modal-card
+          trap-focus
+          :destroy-on-hide="false"
+          aria-role="dialog"
+          aria-modal>
+        <form action="">
+          <div class="modal-card" style="width: auto">
+            <header class="modal-card-head">
+              <p class="modal-card-title">{{gotOneList.name}}</p>
+              <button
+                type="button"
+                class="delete"
+                v-on:click="isOneListModalActive=false"/>
+                <button class="button is-primary" v-on:click="openUpdateListModal()">Update List</button>
+                <!--<button class="button is-primary" v-on:click="deleteOneList()">Delete List</button>-->
+            </header>
+            <section class="modal-card-body">
+              <b-field label="Name of one link">
+                <b-input
+                    :value="newlinkname"
+                    placeholder="Name of one link"
+                    v-model="newlinkname"
+                    required>
+                </b-input>
+              </b-field>
+            </section>
+            <footer class="modal-card-foot">
+                <!--<button class="button" type="button" @click="isOneListModalActive=false">Close</button>-->
+                <!--button class="button is-primary" v-on:click="addLinkToList()">Add to this list</button-->
+            </footer>
+          </div>
+        </form>
+      </b-modal>
+    </section> <!--_________END OF ONE LIST MODAL_________-->
+
+
+
   </div> <!---_________END OF HEADER DIV_________-->
 </template>
 
@@ -282,7 +321,7 @@
 
   export default {
     name: 'Header',
-     beforeCreated(){
+    beforeCreated(){
         console.log("beforeCreated")
     },
     created(){
@@ -312,6 +351,7 @@
         isRegisterModalActive: false,
         isNewListModalActive: false,
         isNewLinkModalActive: false,
+        isOneListModalActive: false,
         username: "",
         password: "",
         userID: "",
@@ -325,17 +365,21 @@
         newlinkname: "",
         newlinkdesc: "",
         newlinkimage: "",
+        gotOneList: {},
+        chosenListID: null,
+        isActive: false
       }
     },
     methods: {
       logIn: function() {
         // const URL = this.$prodURL ? this.$prodURL : this.$URL
         const user = {username: this.username, password: this.password}
+        console.log(user)
         fetch(`${this.$URL}auth/users/login/`, {
           method: "POST",
             body: JSON.stringify(user),
             headers: {
-                "Content-Type": "application/json",
+                "Content-Type": "application/json"
             }
         })
         // following code block courtesy of Narissa
@@ -490,7 +534,42 @@
           }
         })
       },
-    },
+      getSingleList: function(){
+        fetch(`${this.$URL}auth/api/lists/${this.listID}/`, {
+          method: "GET",
+          headers: {
+            "Authorization": `JWT ${this.token}`
+          }
+        })
+        .then((response) => {
+          console.log(response)
+          if (response.status != 200) {
+            response.status
+            console.log(response.status)
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          if (data){
+            console.log("I got one list and it is: ", data)
+              this.gotOneList = data
+          } else {
+            console.log("Could not grab that list for you. Please refresh and try again.")
+          } 
+        })
+      },
+      openOneListModal: function(event){
+        console.log(event)
+        console.log(event.id)
+        console.log(event.target.id)
+        //this.chosenListID = event.target.id,
+        //console.log(this.chosenListID)
+        //this.getSingleList(),
+        this.isOneListModalActive = true,
+        this.isActive = !this.isActive
+      }
+    }
   }
 </script>
 

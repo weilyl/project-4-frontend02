@@ -143,13 +143,34 @@ Use this section to list of all major issues encountered and their resolution.
 
 **RESOLUTION**: 
 
-**ERROR**: 
+**ERROR**: Vue dev tools indicated that data.$route.query & data.$route.params are always empty read-only objects.
 
-**RESOLUTION**: 
+**RESOLUTION**: [Potential solution](https://stackoverflow.com/questions/56309617/vuerouter-this-route-query-always-empty) to add "mode: 'history'," when instantiating a new Router.
 
-**ERROR**: 
 
-**RESOLUTION**: 
+**ERROR**: When attaching directives to navbar dropdown menu in order to set unique id's to each menu item and then pass that id to the next-appearing component:
+
+```
+[Vue warn]: Error in v-on handler: "TypeError: this.parent.selectItem is not a function"
+
+found in
+
+---> <BDropdownItem>
+       <BNavbarDropdown>
+         <BNavbar>
+           <Header> at src/components/Header.vue
+             <App> at src/App.vue
+               <Root>
+warn @ vue.runtime.esm.js?2b0e:619
+logError @ vue.runtime.esm.js?2b0e:1884
+globalHandleError @ vue.runtime.esm.js?2b0e:1879
+handleError @ vue.runtime.esm.js?2b0e:1839
+invokeWithErrorHandling @ vue.runtime.esm.js?2b0e:1862
+invoker @ vue.runtime.esm.js?2b0e:2179
+original._wrapper @ vue.runtime.esm.js?2b0e:6917
+```
+
+**RESOLUTION**: [This](https://stackoverflow.com/questions/36968153/vue-js-reference-div-id-on-v-onclick) did not work. Replaced "event" with "id" but error persists.
 
 **ERROR**: When logging in after attempting to connect components and pass data via `data.$route.params`:
 ```

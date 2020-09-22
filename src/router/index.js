@@ -2,7 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Page2 from '../views/Page2.vue'
-import New from '../views/New.vue'
+import One from '../views/One.vue'
 
 Vue.use(VueRouter)
 
@@ -13,9 +13,9 @@ Vue.use(VueRouter)
     component: Home
   },
   {
-    path: '/lists/',
-    name: 'New',
-    component: New
+    path: '/list/:id',
+    name: 'One',
+    component: One
   },
   {
     path: '/page2',
@@ -25,6 +25,7 @@ Vue.use(VueRouter)
 ]
 
 const router = new VueRouter({
+  mode: 'history',
   routes
 })
 
