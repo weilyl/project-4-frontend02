@@ -20,7 +20,7 @@
         <b-navbar-item href="#"
           v-on:click="isNewLinkModalActive = true"
           v-if="loggedin">
-          <router-link to="/Page2">Add a new link</router-link>
+          <router-link to="/">Add a new link</router-link>
         </b-navbar-item>
 
         <b-navbar-dropdown 
@@ -437,7 +437,7 @@
           "name": this.newlistname,
           "description": this.newlistdesc
         }
-        fetch(`${this.$URL}auth/api/lists`, {
+        fetch(`${this.$URL}auth/api/lists/`, {
           method: "POST",
           body: JSON.stringify(list),
           headers: {
@@ -466,7 +466,7 @@
           "name": this.newlinkname,
           "description": this.newlinkdesc
         }
-        fetch(`${this.$URL}auth/apiLinks`, {
+        fetch(`${this.$URL}auth/api/links/`, {
           method: "POST",
           body: JSON.stringify(link),
           headers: {
@@ -482,6 +482,7 @@
           }
         })
         .then(data => {
+          console.log("data", data)
           if (data){
             this.isNewLinkModalActive=false
           } else {
