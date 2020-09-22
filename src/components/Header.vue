@@ -17,14 +17,15 @@
               label="Your lists" 
               aria-role="list" scrollable="true"
               v-if="loggedin">
-            <b-navbar-dropdown-item 
+            <b-dropdown-item 
               v-for="list in listoflists"
               :key="list.name" 
+              tag="router-link" :to="{ path: '/list' }"
               aria-role="listitem"
               v-model="listname"
             >
-              <router-link :to="'/lists/'+`${list.name}`">{{list.name}}</router-link>
-            </b-navbar-dropdown-item>
+              {{list.name}}
+            </b-dropdown-item>
 
             <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
             <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
@@ -206,13 +207,9 @@
           if(data){
             this.$emit('loggedinnow', data)
             this.token = data.token,
-            this.username = '',
             this.password = '',
             this.loggedin = true,
             this.isComponentModalActive = false,
-            this.firstname = '',
-            this.lastname='',
-            this.email = '',
             this.populateLists()
           } else {
             alert('Incorrect Login')
@@ -256,6 +253,7 @@
             this.$emit('loggedin', data) // do I even need this?
             this.token = data.token,
             this.loggedin = true,
+            this.password = '',
             this.isRegisterModalActive = false
           } else {
             alert('Incorrect Registration Info')
