@@ -136,33 +136,94 @@ snippet1
 Use this section to list of all major issues encountered and their resolution.
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
 **ERROR**:   
+
 **RESOLUTION**: 
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
 **ERROR**: 
+
 **RESOLUTION**: 
 
-**ERROR**: When trying to populate dropdown menu in navbar with an option for each list the user currently has: `"Error: You should wrap BDropdownItem in a dropdown"`
-**RESOLUTION**:
+
+**ERROR**: When trying to populate dropdown menu in navbar with an option for each list the user currently has: `"Error: You should wrap BDropdownItem in a dropdown" vue.runtime.esm.js?2b0e:619`
+**RESOLUTION**: Breakpoint at `console.error(err)` in:
+```js
+function logError (err, vm, info) {
+  if (process.env.NODE_ENV !== 'production') {
+    warn(("Error in " + info + ": \"" + (err.toString()) + "\""), vm);
+  }
+  /* istanbul ignore else */
+  if ((inBrowser || inWeex) && typeof console !== 'undefined') {
+    console.error(err);
+  } else {
+    throw err
+  }
+}
+```
+`console.error(err)` may be getting [deprecated](https://stackoverflow.com/questions/50896442/why-is-catcherr-console-errorerr-discouraged)  or triggered since I installed `cross-env` and changed `package.json` to: 
+
+```js
+ "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service cross-env NODE_ENV=development webpack --config build/webpack.config.js",
+    "lint": "vue-cli-service lint"
+  },
+```
+from:
+```js
+ "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build", 
+    "lint": "vue-cli-service lint"
+  },
+```
+Reverted changes, then ran `npm i` but returned this error:
+
+```
+npm ERR! code EJSONPARSE
+npm ERR! file /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/package.json
+npm ERR! JSON.parse Failed to parse json
+npm ERR! JSON.parse Unexpected token / in JSON at position 159 while parsing near '...cli-service build", //cross-env NODE_ENV...'
+npm ERR! JSON.parse Failed to parse package.json data.
+npm ERR! JSON.parse package.json must be actual JSON, not just JavaScript.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/weily/.npm/_logs/2020-09-22T03_11_03_296Z-debug.log
+```
+
+Once comments were deleted and `npm i` ran in terminal, runtime error was still thrown when logging in the front end. `cross-env` was removed from node dependencies and `npm i` re-run. 
+
+Errors still being thrown, but fetch requests are functioning. Issue is probably a mismatch between the parent element `<b-navbar-dropdown>` and the child element `<b-dropdown-item>`. 
+
+
+**ERROR**: Vue CLI hot reloading not functioning. Changes to Vue files only reflected after server is stopped and restarted, which could take upwards of a minute. 
+
+**RESOLUTION**: `npm install --no-optional` was run to force install optional `fsevents` dependencies to no avail. [source](https://stackoverflow.com/questions/46929196/how-to-solve-npm-install-throwing-fsevents-warning-on-non-mac-os) Instead, `cross-env` was installed and `NODE_ENV` was changed to "development" in `package.json`. [source](https://www.npmjs.com/package/cross-env)
+
 
 **ERROR**: When logging in after resolving unexpected JSON token, received this error:
 `Response {type: "cors", url: "http://127.0.0.1:8000/auth/api/users/login/", redirected: false, status: 404, ok: false, …}`
 
-**RESOLUTION**: 
+**RESOLUTION**: Python server was not running.
 
 
 **ERROR**: When logging into frontend: `Uncaught (in promise) SyntaxError: Unexpected token < in JSON at position 0`
