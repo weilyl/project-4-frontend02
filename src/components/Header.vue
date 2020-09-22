@@ -20,6 +20,7 @@
             <b-dropdown-item 
               v-for="list in listoflists"
               :key="list.name" 
+              tag="router-link" :to="{ path: '/list' }"
               aria-role="listitem"
               v-model="listname"
             >

@@ -38,7 +38,7 @@
                 <b-field label="New Link URL"
                     :label-position="labelPosition">
                     <b-input type="url"
-                        v-model="linkURL">
+                        v-model="linkImage">
                     </b-input>
                 </b-field>
 
@@ -51,15 +51,38 @@
 
 <script>
 export default {
-    name: 'Link',
+    name: 'New',
     props: ["loggedin"],
     data() {
         return {
-            labelPosition: 'on-border'
+            labelPosition: 'on-border',
+            token: "",
+            listName: "",
+            listID: null,
+            listDesc: "",
+            linkName = "",
+            linkID = null,
+            linkDesc = "",
+            linkImage = "",
         }
     },
     methods: {
-        
+        newList: function(){
+            fetch(`${this.URL}auth/api/lists/`, {
+            })
+            .then((response) => {
+            })
+            .then(data => {
+            })
+        },
+        newLink: function(){
+            fetch(`${this.URL}auth/api/links/`, {
+            })
+            .then((response) => {
+            })
+            .then(data => {
+            })
+        }
     },
     created: function() {
         console.log(this.loggedin)

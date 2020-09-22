@@ -48,6 +48,14 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
+}
+
+#app:not(Header){
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: auto;
 }
 
 #nav {
@@ -62,15 +70,10 @@ export default {
 #nav a.router-link-exact-active {
   color: #42b983;
 }
-Footer {
-  width: 100%;
-  bottom: 0;
-}
-</style>
 
-<!--#main {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-}-->
+footer {
+    width: 100%;
+    margin-bottom: 0px;
+}
+
+</style>
