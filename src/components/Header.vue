@@ -251,6 +251,7 @@
             this.$emit('loggedin', data) // do I even need this?
             this.token = data.token,
             this.loggedin = true,
+            this.password = '',
             this.isRegisterModalActive = false
           } else {
             alert('Incorrect Registration Info')
