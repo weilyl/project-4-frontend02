@@ -2,11 +2,11 @@
 
 ## Project
 
-Link to completed project [here](http://finance-tracker.surge.sh/)
+Link to completed project [here](http://onthehook.netlify.app/)
 
-Link to project frontend [here](https://github.com/weilyl/project-3-frontend)
+Link to project frontend [here](https://github.com/weilyl/project-4-frontend02)
 
-Link to project backend [here](https://github.com/weilyl/project-3-backend)
+Link to project backend [here](https://github.com/weilyl/project-4-backend02)
 
 ## Project Schedule
 
@@ -25,25 +25,18 @@ You are **responsible** for scheduling time with your squad to seek approval for
 
 ## Project Description
 
-This finance tracker is a simple tool for users to visualize their spending history. 
-The front-end will be built using HTML, CSS, Vue.js, Bootstrap, jQuery and D3.js. 
-Our users value a minimal layout and functionality to achieve their goals faster.
-Users will be able to make an account and sign in. 
-Users will be able to store their expenses in a database. 
-Users will be able to exclusively access their own expenses. 
-Users will be able to see their expenses as a table and as a color-coded pie chart.
-In future features, users will be able to: 
-- log in using social media accounts
-- select dates 
-- select different types of charts 
-- make multiple budgets, and
-- sort expenses by category.
+MVP: 
+Users can submit links to patterns or tutorials that are visible by all users (links only because many patterns are copyrighted). Users can save them to lists, but also be able to see all their favorites in one place. When a user deletes their account, their lists get deleted as well, but not the patterns they submitted.
+post-MVP: 
+Users can filter by the difficulty level they (privately) assign to each pattern, project type (ex: hats vs scarves), medium (Youtube tutorial vs PDF vs .txt).
+post-post-MVP: 
+Users can add publicly visible reviews to patterns and give them ratings on technical difficulty, ease of pattern/tutorial comprehension, aesthetic, etc. Owners of copyrighted patterns can request I take down a submission if someone has posted a full pattern that is not open source or that is hosted on a website they rely on for income. For each pattern, users can see both their own ratings as well as the average ratings of all users.
 
 ## Wireframes
 
-- [Mobile-Homepage](https://res.cloudinary.com/wjclavell/image/upload/v1598145428/Project%203/Finance_Tracker_mobile_ymbohj.png)
-- [Mobile-Login/Modal](https://res.cloudinary.com/wjclavell/image/upload/v1598156265/Project%203/Finance-Tracker_Login-Modal_mmfq5h.png)
-- [Desktop](https://res.cloudinary.com/wjclavell/image/upload/v1598200003/Project%203/FinanceTracker_Desktop_h1dcx3.png)
+- [Mobile-Homepage](https://res.cloudinary.com/dd3nkph31/image/upload/v1600060028/GAProject04/iPhone_SE_4x_ayccli.png)
+- [Mobile-Login/Modal](https://res.cloudinary.com/dd3nkph31/image/upload/v1600060034/GAProject04/iPhone_8_4x_1_vdtikd.png)
+- [Desktop](https://res.cloudinary.com/dd3nkph31/image/upload/v1600060025/GAProject04/Ultra_HD_4x_gyogtv.pngg)
 
 ## Time/Priority Matrix
 
@@ -57,25 +50,24 @@ The MVP list includes functionality that will be implemented upon project comple
 #### MVP
 
 - Hamburger menu/Navigation Bar (mobile-first)
-- Sign In Modal
-- Log In Modal
-- Input Expenses Modal
-- Table Template
-- Vue.js
-- Total spending
-- CSS (Bootstrap)
-- D3.js Table
-- D3.js Chart
+- User-only
+- User-specific lists (CRUD)
+- Users can add/remove links from lists
+- Users can create lists
+- Vue.js (Buefy)
+- CSS (Bulma/Buefy)
 - Footer
 
 #### PostMVP
 
-- About, Contact, etc. for the footer
-- More charts (line graph, bar chart, pie chart)
-- Filter by month, year, etc.
+- About, Contact
+- Image scraper for URLs
+- User profile with image, list sidebar, favorite tags
 - Sort by category
-- Logo
-- User profile
+- Reviews
+- Tags
+- Utilize breakpoints or classes to hide dropdown arrow when expanded
+- Include text field to save patterns
 
 ## Functional Components
 
@@ -217,7 +209,9 @@ Errors still being thrown, but fetch requests are functioning. Issue is probably
 
 **ERROR**: Vue CLI hot reloading not functioning. Changes to Vue files only reflected after server is stopped and restarted, which could take upwards of a minute. 
 
-**RESOLUTION**: `npm install --no-optional` was run to force install optional `fsevents` dependencies to no avail. [source](https://stackoverflow.com/questions/46929196/how-to-solve-npm-install-throwing-fsevents-warning-on-non-mac-os) Instead, `cross-env` was installed and `NODE_ENV` was changed to "development" in `package.json`. [source](https://www.npmjs.com/package/cross-env)
+**RESOLUTION**: `npm install --no-optional` was run to force install optional `fsevents` dependencies to no avail. [source](https://stackoverflow.com/questions/46929196/how-to-solve-npm-install-throwing-fsevents-warning-on-non-mac-os) Instead, `cross-env` was installed and `NODE_ENV` was changed to "development" in `package.json`. [source](https://www.npmjs.com/package/cross-env) This came with its own issues (see above).
+
+Increased the number of inotify watchers [link](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers) via [here](https://github.com/vuejs-templates/webpack/issues/349). Further reading: [1](https://github.com/vuejs/vue-cli/issues/2051), [2](https://vue-loader.vuejs.org/guide/hot-reload.html#usage).
 
 
 **ERROR**: When logging in after resolving unexpected JSON token, received this error:

@@ -205,13 +205,9 @@
           if(data){
             this.$emit('loggedin', data)
             this.token = data.token,
-            this.username = '',
             this.password = '',
             this.loggedin = true,
             this.isComponentModalActive = false,
-            this.firstname = '',
-            this.lastname='',
-            this.email = '',
             this.populateLists()
           } else {
             alert('Incorrect Login')
