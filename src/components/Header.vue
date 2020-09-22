@@ -162,6 +162,52 @@
       </b-modal>
     </section> <!--_________END OF BUEFY REGISTER MODAL_________-->
 
+    <section> <!---_________START OF BUEFY NEW LIST MODAL_________-->
+      <b-modal 
+          v-model="isNewListModalActive"
+          has-modal-card
+          trap-focus
+          :destroy-on-hide="false"
+          aria-role="dialog"
+          aria-modal>
+        <form action="">
+          <div class="modal-card" style="width: auto">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Create a New List</p>
+              <button
+                type="button"
+                class="delete"
+                @click="isNewListModalActive=false"/>
+            </header>
+            <section class="modal-card-body">
+              <b-field label="Name of New List">
+                <b-input
+                    :value="newlistname"
+                    placeholder="Name of your new list"
+                    v-model="newlistname"
+                    required>
+                </b-input>
+              </b-field>
+
+              <b-field label="Description of New List">
+                <b-input
+                    :value="newlistdesc"
+                    placeholder="Description of your new list"
+                    v-model="newlistdesc"
+                    required>
+                </b-input>
+              </b-field>
+
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" type="button" @click="isNewListModalActive=false">Close</button>
+                <button class="button is-primary" v-on:click="createNewList()">Login</button>
+            </footer>
+          </div>
+        </form>
+      </b-modal>
+    </section> <!--_________END OF NEW LIST MODAL_________-->
+
   </div> <!---_________END OF HEADER DIV_________-->
 </template>
 
