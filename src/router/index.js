@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Page2 from '../views/Page2.vue'
+import ListDashboard from '../components/ListDashboard.vue'
 // import New from '../views/New.vue'
 
 Vue.use(VueRouter)
@@ -18,9 +19,9 @@ Vue.use(VueRouter)
   //   component: New
   // },
   {
-    path: `/list-dashboard/`,
+    path: `/list-dashboard/:id`,
     name: 'ListDashboard',
-    component: "ListDashboard"
+    component: ListDashboard
   },
   {
     path: '/page2',
