@@ -26,6 +26,30 @@ export default {
     //Sidebar,
     Footer
   },
+  beforeCreated(){
+      console.log("beforeCreated")
+  },
+  created(){
+      console.log("created")
+  }, 
+  beforeMount(){
+      console.log("beforeMount")
+  },
+  mounted(){
+      console.log("mounted")
+  },
+  beforeUpdate(){
+      console.log("beforeUpdate")
+  },
+  updated(){
+      console.log("updated")
+  },
+  beforeDestroy(){
+      console.log("beforeDestroy")
+  },
+  destroyed(){
+      console.log("destroyed")
+  },
   data() {
     return {
       // loggedin: false
@@ -42,7 +66,21 @@ export default {
 </script>
 
 <style>
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-align: center;
+  color: #2c3e50;
+  height: 100vh;
+}
 
+#app:not(Header){
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: auto;
+}
 
 #nav {
   padding: 30px;

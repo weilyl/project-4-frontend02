@@ -20,7 +20,7 @@
             <b-dropdown-item 
               v-for="list in listoflists"
               :key="list.name" 
-              tag="router-link" :to="{ path: '/list' }"
+              tag="router-link" :to="{ path: '/list-dashboard/' + list.name, query: $route.query, params: {listname: list.name}}"
               aria-role="listitem"
               v-model="listname"
             >
@@ -176,12 +176,37 @@
         isRegisterModalActive: false,
         username: "",
         password: "",
+        userID: "",
         loggedin: "",
         token: "",
         listname: "",
         listoflists: [],
         labelPosition: 'on-border'
       }
+    },
+    beforeCreated(){
+        console.log("HEADER beforeCreated")
+    },
+    created(){
+        console.log("created")
+    }, 
+    beforeMount(){
+        console.log("beforeMount")
+    },
+    mounted(){
+        console.log("mounted")
+    },
+    beforeUpdate(){
+        console.log("beforeUpdate")
+    },
+    updated(){
+        console.log("updated")
+    },
+    beforeDestroy(){
+        console.log("beforeDestroy")
+    },
+    destroyed(){
+        console.log("destroyed")
     },
     methods: {
       logIn: function() {
@@ -205,12 +230,16 @@
         .then(data => {
           console.log('data', data)
           if(data){
-            this.$emit('loggedinnow', data)
             this.token = data.token,
+            this.$route.params = {token: data.token},
             this.password = '',
             this.loggedin = true,
+            this.$route.params = {loggedin: this.loggedin},
             this.isComponentModalActive = false,
-            this.populateLists()
+            this.userID = data.id,
+            this.$route.params = {userID: this.userID},
+            this.populateLists()//,
+            // this.$emit('loggedinnow', login)
           } else {
             alert('Incorrect Login')
           }
@@ -218,7 +247,9 @@
       },
       logOut: function() {
         this.loggedin = false,
+        this.$route.params.loggedin = this.loggedin,
         this.token = '',
+        this.$route.params.token = '',
         this.username = '',
         this.password = '', 
         this.firstname = '',
@@ -252,7 +283,11 @@
           if(data){
             this.$emit('loggedin', data) // do I even need this?
             this.token = data.token,
+            this.$route.params.token = this.token,
             this.loggedin = true,
+            this.$route.params.loggedin = this.loggedin,
+            this.userID = data.id,
+            this.$route.params = {userID: this.userID},
             this.password = '',
             this.isRegisterModalActive = false
           } else {
