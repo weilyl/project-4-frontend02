@@ -17,7 +17,7 @@
               label="Your lists" 
               aria-role="list" scrollable="true"
               v-if="loggedin">
-            <b-navbar-dropdown-item 
+            <b-dropdown-item 
               v-for="list in listoflists"
               :key="list.name" 
               aria-role="listitem"
@@ -27,7 +27,7 @@
 
             >
               {{list.name}}
-            </b-navbar-dropdown-item>
+            </b-dropdown-item>
 
             <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
             <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
