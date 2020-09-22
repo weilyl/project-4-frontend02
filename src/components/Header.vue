@@ -180,6 +180,7 @@
         token: "",
         listname: "",
         listoflists: [],
+        labelPosition: 'on-border'
       }
     },
     methods: {
@@ -204,7 +205,7 @@
         .then(data => {
           console.log('data', data)
           if(data){
-            this.$emit('loggedin', data)
+            this.$emit('loggedinnow', data)
             this.token = data.token,
             this.password = '',
             this.loggedin = true,
