@@ -22,8 +22,11 @@
               :key="list.name" 
               aria-role="listitem"
               v-model="listname"
+              tag="router-link"
+              :to="'/lists/'+`${list.name}`"
+
             >
-              <router-link :to="'/lists/'+`${list.name}`">{{list.name}}</router-link>
+              {{list.name}}
             </b-navbar-dropdown-item>
 
             <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
@@ -201,12 +204,67 @@
             </section>
             <footer class="modal-card-foot">
                 <button class="button" type="button" @click="isNewListModalActive=false">Close</button>
-                <button class="button is-primary" v-on:click="createNewList()">Login</button>
+                <button class="button is-primary" v-on:click="createNewList()">Make List</button>
             </footer>
           </div>
         </form>
       </b-modal>
     </section> <!--_________END OF NEW LIST MODAL_________-->
+
+    <section> <!---_________START OF BUEFY NEW LINK MODAL_________-->
+      <b-modal 
+          v-model="isNewLinkModalActive"
+          has-modal-card
+          trap-focus
+          :destroy-on-hide="false"
+          aria-role="dialog"
+          aria-modal>
+        <form action="">
+          <div class="modal-card" style="width: auto">
+            <header class="modal-card-head">
+              <p class="modal-card-title">Create a New Link</p>
+              <button
+                type="button"
+                class="delete"
+                @click="isNewLinkModalActive=false"/>
+            </header>
+            <section class="modal-card-body">
+              <b-field label="Name of New Link">
+                <b-input
+                    :value="newlinkname"
+                    placeholder="Name of your new link"
+                    v-model="newlinkname"
+                    required>
+                </b-input>
+              </b-field>
+
+              <b-field label="Description of New Link">
+                <b-input
+                    :value="newlinkdesc"
+                    placeholder="Description of your new link"
+                    v-model="newlinkdesc"
+                    required>
+                </b-input>
+              </b-field>
+
+              <b-field label="Image for New Link">
+                <b-input
+                    :value="newlinkimage"
+                    placeholder="URL to your new link"
+                    v-model="newlinkimage"
+                    required>
+                </b-input>
+              </b-field>
+
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button" type="button" @click="isNewLinkModalActive=false">Close</button>
+                <button class="button is-primary" v-on:click="createNewLink()">Add link</button>
+            </footer>
+          </div>
+        </form>
+      </b-modal>
+    </section> <!--_________END OF NEW LINK MODAL_________-->
 
   </div> <!---_________END OF HEADER DIV_________-->
 </template>
@@ -215,17 +273,49 @@
 
   export default {
     name: 'Header',
+     beforeCreated(){
+        console.log("beforeCreated")
+    },
+    created(){
+        console.log("created")
+    }, 
+    beforeMount(){
+        console.log("beforeMount")
+    },
+    mounted(){
+        console.log("mounted")
+    },
+    beforeUpdate(){
+        console.log("beforeUpdate")
+    },
+    updated(){
+        console.log("updated")
+    },
+    beforeDestroy(){
+        console.log("beforeDestroy")
+    },
+    destroyed(){
+        console.log("destroyed")
+    },
     data() {
       return {
         isComponentModalActive: false,
         isRegisterModalActive: false,
+        isNewListModalActive: false,
+        isNewLinkModalActive: false,
         username: "",
         password: "",
+        userID: "",
         loggedin: "",
         token: "",
         listname: "",
         listoflists: [],
-        labelPosition: 'on-border'
+        labelPosition: 'on-border', 
+        newlistname: "",
+        newlistdesc: "",
+        newlinkname: "",
+        newlinkdesc: "",
+        newlinkimage: "",
       }
     },
     methods: {
@@ -332,7 +422,64 @@
             console.log("No lists found for this user. Create a new list?")
           } 
         })
-      }
+      }, 
+      createNewList: function (){
+        const list = {
+          "name": this.newlistname,
+          "description": this.newlistdesc
+        }
+        fetch(`${this.$URL}auth/api/lists`, {
+          method: "POST",
+          body: JSON.stringify(list),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `JWT ${this.token}`
+          }
+        })
+        .then(response => {
+          if (response.status != 201) {
+            response.status
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          if (data){
+            this.populateLists(),
+            this.isNewListModalActive=false
+          } else {
+            alert("Uh oh, an error occured. Please check if you already have a list with that name.")
+          }
+        })
+      },
+      createNewLink: function (){
+        const link = {
+          "name": this.newlinkname,
+          "description": this.newlinkdesc
+        }
+        fetch(`${this.$URL}auth/apiLinks`, {
+          method: "POST",
+          body: JSON.stringify(link),
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `JWT ${this.token}`
+          }
+        })
+        .then(response => {
+          if (response.status != 201) {
+            response.status
+          } else {
+            return response.json()
+          }
+        })
+        .then(data => {
+          if (data){
+            this.isNewLinkModalActive=false
+          } else {
+            alert("Uh oh, an error occured. Please check if you already have aLink with that name.")
+          }
+        })
+      },
     },
   }
 </script>

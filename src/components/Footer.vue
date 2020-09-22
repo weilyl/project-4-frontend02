@@ -27,4 +27,10 @@ footer {
 }
 -->
 <style>
+
+.footer {
+    width: 100%;
+    margin-bottom: -50px;
+    overflow: hidden;
+}
 </style>

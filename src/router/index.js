@@ -18,11 +18,6 @@ Vue.use(VueRouter)
     component: New
   },
   {
-    path: `/list-dashboard/list.name`,
-    name: 'ListDashboard',
-    component: "ListDashboard"
-  },
-  {
     path: '/page2',
     name: 'Page2',
     component: Page2
