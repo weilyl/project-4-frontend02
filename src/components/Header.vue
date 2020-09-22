@@ -8,11 +8,21 @@
       </template>
       <template slot="start">
         <b-navbar-item href="#">
-          <router-link to="/">Home</router-link>
+          <router-link to="/" >Home</router-link>
         </b-navbar-item>
-        <b-navbar-item href="#">
-          <router-link to="/Page2">About</router-link>
+
+        <b-navbar-item href="#" 
+          v-on:click="isNewListModalActive = true"
+          v-if="loggedin">
+          <router-link to="/">Create a new list</router-link>
         </b-navbar-item>
+
+        <b-navbar-item href="#"
+          v-on:click="isNewLinkModalActive = true"
+          v-if="loggedin">
+          <router-link to="/Page2">Add a new link</router-link>
+        </b-navbar-item>
+
         <b-navbar-dropdown 
               label="Your lists" 
               aria-role="list" scrollable="true"
@@ -24,7 +34,6 @@
               v-model="listname"
               tag="router-link"
               :to="'/lists/'+`${list.name}`"
-
             >
               {{list.name}}
             </b-dropdown-item>
