@@ -15,18 +15,19 @@
         </b-navbar-item>
         <b-navbar-dropdown 
               label="Your lists" 
-              aria-role="list" scrollable="true">
-            <b-navbar-dropdown-item 
+              aria-role="list" scrollable="true"
+              v-if="loggedin">
+            <b-dropdown-item 
               v-for="list in listoflists"
               :key="list.name" 
               aria-role="listitem"
               v-model="listname"
             >
               {{list.name}}
-            </b-navbar-dropdown-item>
+            </b-dropdown-item>
 
-            <b-navbar-dropdown-item aria-role="listitem">Another action</b-navbar-dropdown-item>
-            <b-navbar-dropdown-item aria-role="listitem">Something else</b-navbar-dropdown-item>
+            <b-dropdown-item aria-role="listitem">Another action</b-dropdown-item>
+            <b-dropdown-item aria-role="listitem">Something else</b-dropdown-item>
         </b-navbar-dropdown>
       </template>
 
@@ -160,47 +161,6 @@
         </form>
       </b-modal>
     </section> <!--_________END OF BUEFY REGISTER MODAL_________-->
-
-    <section> <!---section repurposed to add link to a list-->
-      <b-field label="Name" :label-position="labelPosition">
-        <b-input value="Kevin Garvey"></b-input>
-      </b-field>
-
-      <b-field label="Email"
-        :label-position="labelPosition"
-        type="is-danger"
-        message="This email is invalid">
-          <b-input type="email"
-              value="john@"
-              maxlength="30">
-          </b-input>
-      </b-field>
-
-      <b-field label="Username"
-          :label-position="labelPosition"
-          type="is-success"
-          message="This username is available">
-          <b-input value="johnsilver" maxlength="30"></b-input>
-      </b-field>
-
-      <b-field label="Password"
-          :label-position="labelPosition"
-          type="is-warning">
-          <b-input value="123" type="password" maxlength="30"></b-input>
-          <template slot="message">
-              <div>Password is too short</div>
-              <div>Password must have at least 8 characters</div>
-          </template>
-      </b-field>
-
-      <!--b-field label="Subject"
-          :label-position="labelPosition">
-          <b-select placeholder="Select a subject">
-              <option value="1">Option 1</option>
-              <option value="2">Option 2</option>
-          </b-select>
-      </b-field-->
-    </section>
 
   </div> <!---_________END OF HEADER DIV_________-->
 </template>
