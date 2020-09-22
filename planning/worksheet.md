@@ -156,7 +156,7 @@ Use this section to list of all major issues encountered and their resolution.
 **ERROR**: 
 **RESOLUTION**: 
 
-**ERROR**: 
+**ERROR**: When trying to populate dropdown menu in navbar with an option for each list the user currently has: `"Error: You should wrap BDropdownItem in a dropdown"`
 **RESOLUTION**:
 
 **ERROR**: When logging in after resolving unexpected JSON token, received this error:
