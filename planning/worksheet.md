@@ -151,10 +151,27 @@ Use this section to list of all major issues encountered and their resolution.
 
 **RESOLUTION**: 
 
-**ERROR**: 
+**ERROR**: When logging in after attempting to connect components and pass data via `data.$route.params`:
+```
+Header.vue?5e07:233 Uncaught (in promise) TypeError: Cannot assign to read only property 'params' of object '#<Object>'
+    at eval (Header.vue?5e07:233)
+```
 
-**RESOLUTION**: 
+**RESOLUTION**: In Header.vue line 234, used `this.$route.params.token = data.token,` to replace `this.$route.params = {token = data.token}`. Error persisted, so `$route.params.token: ""` was added to data property in Header.vue. A Syntax Error was raised instead:
 
+```
+Syntax Error: SyntaxError: /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/src/components/Header.vue: Unexpected token, expected "," (185:12)
+
+  183 |       listoflists: [],
+  184 |       labelPosition: 'on-border', 
+> 185 |       $route.params.token: ""
+      |             ^
+  186 |     }
+  187 |   },
+  188 |   beforeCreated(){
+```
+
+Replacing `$route,params.token: ""` raised another error, so this line was removed. According to [this](https://github.com/vuejs/vue-router/issues/1439), all `$route` properties are read-only.
 
 **ERROR**: When trying to populate dropdown menu in navbar with an option for each list the user currently has: `"Error: You should wrap BDropdownItem in a dropdown" vue.runtime.esm.js?2b0e:619`
 **RESOLUTION**: Breakpoint at `console.error(err)` in:

@@ -231,7 +231,7 @@
           console.log('data', data)
           if(data){
             this.token = data.token,
-            this.$route.params = {token: data.token},
+            this.$route.params.token = data.token,
             this.password = '',
             this.loggedin = true,
             this.$route.params = {loggedin: this.loggedin},
