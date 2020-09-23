@@ -22,24 +22,23 @@
           v-if="loggedin">
           <router-link to="/">Add a new link</router-link>
         </b-navbar-item>
-
+        <!--DROPDOWN IN NAVBAR BEGINS-->
         <b-navbar-dropdown 
               label="Your lists" 
               aria-role="list" scrollable="true"
-              v-if="loggedin">
+              v-if="loggedin"
+              v-model="listID">
             <b-dropdown-item 
               v-for="list in listoflists"
               :id="list.id" 
               :key="list.name"
               aria-role="listitem"
-              v-model="listname"
-              v-on:click="openOneListModal(id)"
-              tag="router-link" :to="{ path: '/list/'+ id }"
+              v-on:click="openOneListModal"
             >
               {{list.name}}
             </b-dropdown-item>
 
-        </b-navbar-dropdown>
+        </b-navbar-dropdown><!--ENDS DROPDOWN IN NAVBAR-->
       </template>
 
       <template slot="end">
@@ -367,7 +366,8 @@
         newlinkimage: "",
         gotOneList: {},
         chosenListID: null,
-        isActive: false
+        isActive: false,
+        listID: 0,
       }
     },
     methods: {
