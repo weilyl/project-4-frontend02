@@ -139,9 +139,37 @@ Use this section to list of all major issues encountered and their resolution.
 
 **RESOLUTION**: 
 
-**ERROR**: 
+**ERROR**: Node dependencies are not reinstalling from the package.json after node_modules directory deleted and `npm install` was run.
 
 **RESOLUTION**: 
+Referencing [this](https://stackoverflow.com/questions/12866494/how-do-you-reinstall-an-apps-dependencies-using-npm):
+1. tried `npm install p04frotnend` from one level up
+2. tried `npm install node_modules` from same level as package.json
+3. tried `npm rebuild`, followed by `npm i`
+4. `npm update`
+5. `npm cache clean` returned following errors:
+
+```
+npm ERR! As of npm@5, the npm cache self-heals from corruption issues and data extracted from the cache is guaranteed to be valid. If you want to make sure everything is consistent, use 'npm cache verify' instead. On the other hand, if you're debugging an issue with the installer, you can use `npm install --cache /tmp/empty-cache` to use a temporary cache instead of nuking the actual one.
+npm ERR! 
+npm ERR! If you're sure you want to delete the entire cache, rerun this command with --force.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/weily/.npm/_logs/2020-09-23T19_33_11_298Z-debug.log
+```
+6. `npx reinstall` (apparently include removal of node_modules dir)
+Received the usual error from npm commands
+```
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/webpack-dev-server/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/watchpack-chokidar2/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+```
+and node_modules folder still missing, so referencing [this](https://stackoverflow.com/questions/12866494/how-do-you-reinstall-an-apps-dependencies-using-npm). 
+Above referenced solutions also did not re-create a node_modules file so referencing [this](https://stackoverflow.com/questions/21250849/npm-install-doesnt-create-node-modules-directory) solution to delete package-lock.json and npm i, which also did not re-create node_modules. StackOverflow account being made to seek further advice.
+
 
 **ERROR**: Vue dev tools indicated that data.$route.query & data.$route.params are always empty read-only objects.
 
