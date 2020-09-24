@@ -135,7 +135,7 @@ Use this section to list of all major issues encountered and their resolution.
 
 **RESOLUTION**: 
 
-**ERROR**:   
+**ERROR**: 
 
 **RESOLUTION**: 
 
@@ -168,8 +168,273 @@ npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.3 (node_modules/fse
 npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
 ```
 and node_modules folder still missing, so referencing [this](https://stackoverflow.com/questions/12866494/how-do-you-reinstall-an-apps-dependencies-using-npm). 
-Above referenced solutions also did not re-create a node_modules file so referencing [this](https://stackoverflow.com/questions/21250849/npm-install-doesnt-create-node-modules-directory) solution to delete package-lock.json and npm i, which also did not re-create node_modules. StackOverflow account being made to seek further advice.
+Above referenced solutions also did not re-create a node_modules file so referencing [this](https://stackoverflow.com/questions/21250849/npm-install-doesnt-create-node-modules-directory) solution to delete package-lock.json and npm i, which also did not re-create node_modules. 
 
+Going back to the beginning when template was installed with `npx merced-spinup vue <frontend_dir_name>`. Ran `npm uninstall merced-spinup` and (mistakenly) `npm uninstall vue`. Then:
+`npx merced-spinup vue .` which replaced all files with template. 
+A new branch was made for the recreation of the template. 
+node_modules still missing. 
+`npm install` was run. 
+node_modules still missing.
+A node_modules directory created earlier in the day was found in the parent folder of the current project. That recent node_modules was moved to project directory. 
+node_modules did not appear in the VS Code Workspace.
+`npm install`
+`npm add`
+`npm run serve`
+Returned errors:
+```
+ERROR  Failed to compile with 2 errors                                   7:20:24 PM
+
+This dependency was not found:
+
+* vue in ./src/main.js, ./src/router/index.js
+
+To install it, you can run: npm install --save vue
+(node:8436) UnhandledPromiseRejectionWarning: Error: ENOENT: no such file or directory, stat '/mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate'
+(node:8436) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:8436) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+```
+`npm install --save vue`
+Returned errors: 
+```
+npm WARN checkPermissions Missing write access to /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate
+npm ERR! code ENOENT
+npm ERR! syscall access
+npm ERR! path /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate
+npm ERR! errno -2
+npm ERR! enoent ENOENT: no such file or directory, access '/mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate'
+npm ERR! enoent This is related to npm not being able to find a file.
+npm ERR! enoent 
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/weily/.npm/_logs/2020-09-23T23_21_03_363Z-debug.log
+```
+`npm run serve`
+Returned error:
+```
+ERROR  Failed to compile with 2 errors                                   7:22:14 PM
+
+This dependency was not found:
+
+* vue in ./src/main.js, ./src/router/index.js
+
+To install it, you can run: npm install --save vue
+(node:8483) UnhandledPromiseRejectionWarning: Error: ENOENT: no such file or directory, stat '/mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate'
+(node:8483) UnhandledPromiseRejectionWarning: Unhandled promise rejection. This error originated either by throwing inside of an async function without a catch block, or by rejecting a promise which was not handled with .catch(). To terminate the node process on unhandled promise rejection, use the CLI flag `--unhandled-rejections=strict` (see https://nodejs.org/api/cli.html#cli_unhandled_rejections_mode). (rejection id: 1)
+(node:8483) [DEP0018] DeprecationWarning: Unhandled promise rejections are deprecated. In the future, promise rejections that are not handled will terminate the Node.js process with a non-zero exit code.
+```
+
+Searched for solution [here](https://github.com/vuejs/vue-cli/issues/439)
+```
+npm i -g npm-check-updates
+npm-check-updates -u
+npm install
+```
+Returned errors:
+```
+npm WARN deprecated request@2.88.2: request has been deprecated, see https://github.com/request/request/issues/3142
+npm WARN deprecated har-validator@5.1.5: this library is no longer supported
+npm WARN checkPermissions Missing write access to /usr/lib/node_modules
+npm ERR! code EACCES
+npm ERR! syscall access
+npm ERR! path /usr/lib/node_modules
+npm ERR! errno -13
+npm ERR! Error: EACCES: permission denied, access '/usr/lib/node_modules'
+npm ERR!  [Error: EACCES: permission denied, access '/usr/lib/node_modules'] {
+npm ERR!   errno: -13,
+npm ERR!   code: 'EACCES',
+npm ERR!   syscall: 'access',
+npm ERR!   path: '/usr/lib/node_modules'
+npm ERR! }
+npm ERR! 
+npm ERR! The operation was rejected by your operating system.
+npm ERR! It is likely you do not have the permissions to access this file as the current user
+npm ERR! 
+npm ERR! If you believe this might be a permissions issue, please double-check the
+npm ERR! permissions of the file and its containing directories, or try running
+npm ERR! the command again as root/Administrator.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /home/weily/.npm/_logs/2020-09-23T23_28_07_112Z-debug.log
+```
+A new 'node_modules' was created manually in VS Code. 
+Previous commands re-run with sudoers permission. 
+node_modules was updated and returned:
+```
+ vue-router              ^3.2.0  →   ^3.4.3   
+ eslint                  ^6.7.2  →   ^7.9.0   
+ vue-template-compiler  ^2.6.11  →  ^2.6.12   
+
+Run npm install to install new versions.
+```
+
+`sudo npm install` returned the following errors:
+```
+npm WARN checkPermissions Missing write access to /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate
+npm WARN buefy@0.9.3 requires a peer of vue@^2.6.11 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-loader@2.2.1 requires a peer of eslint@>=1.6.0 <7.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-plugin-vue@6.2.2 requires a peer of eslint@^5.0.0 || ^6.0.0 but none is installed. You must install peer dependencies yourself.
+
+npm ERR! code ENOENT
+npm ERR! syscall access
+npm ERR! path /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate
+npm ERR! errno -2
+npm ERR! enoent ENOENT: no such file or directory, access '/mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate'
+npm ERR! enoent This is related to npm not being able to find a file.
+npm ERR! enoent 
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2020-09-23T23_29_51_657Z-debug.log
+```
+A symbiotic link named `vuetemplate` was found in node_modules and deleted. 
+`npm-check-updates -u` returned no errors.
+`sudo npm install` returned
+```
+npm ERR! errno -2
+npm ERR! enoent ENOENT: no such file or directory, access '/mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/vuetemplate'
+npm ERR! enoent This is related to npm not being able to find a file.
+```
+`sudo npm install vue` returned same  error as above. 
+`sudo npm install vuetemplate`returned: 
+```
+npm ERR! code ENOSELF
+npm ERR! Refusing to install package with name "vuetemplate" under a package
+npm ERR! also called "vuetemplate". Did you name your project the same
+npm ERR! as the dependency you're installing?
+npm ERR! 
+npm ERR! For more information, see:
+npm ERR!     <https://docs.npmjs.com/cli/install#limitations-of-npms-install-algorithm>
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /root/.npm/_logs/2020-09-23T23_34_45_615Z-debug.log
+```
+Realized that the `name:` property in package.json 1) matches the name of the missing dependency vuetemplate and 2) is meant to be the project name (parent dir name). `Name:` property was reassigned to the value `p04attempt3`.
+
+Returned:
+```
+npm WARN deprecated core-js@2.6.11: core-js@<3 is no longer maintained and not recommended for usage due to the number of issues. Please, upgrade your dependencies to the actual version of core-js@3.
+npm WARN deprecated popper.js@0.6.4: You can find the new Popper v2 at @popperjs/core, this package is dedicated to the legacy v1
+
+> core-js@2.6.11 postinstall /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/babel-runtime/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+
+The project needs your help! Please consider supporting of core-js on Open Collective or Patreon: 
+> https://opencollective.com/core-js 
+> https://www.patreon.com/zloirock 
+
+Also, the author of core-js ( https://github.com/zloirock ) is looking for a good job -)
+
+
+> core-js@2.6.11 postinstall /mnt/c/Users/weily/Documents/seir-6-29/student/unit04/project04/p04frontend/node_modules/iview/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+Thank you for using core-js ( https://github.com/zloirock/core-js ) for polyfilling JavaScript standard library!
+
+The project needs your help! Please consider supporting of core-js on Open Collective or Patreon: 
+> https://opencollective.com/core-js 
+> https://www.patreon.com/zloirock 
+
+Also, the author of core-js ( https://github.com/zloirock ) is looking for a good job -)
+
+npm WARN @vue/cli-plugin-eslint@4.5.6 requires a peer of eslint@>= 1.6.0 but none is installed. You must install peer dependencies yourself.
+npm WARN babel-eslint@10.1.0 requires a peer of eslint@>= 4.12.1 but none is installed. You must install peer dependencies yourself.
+npm WARN buefy@0.9.3 requires a peer of vue@^2.6.11 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-loader@2.2.1 requires a peer of eslint@>=1.6.0 <7.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN eslint-plugin-vue@6.2.2 requires a peer of eslint@^5.0.0 || ^6.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN vue-eslint-parser@7.1.0 requires a peer of eslint@>=5.0.0 but none is installed. You must install peer dependencies yourself.
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@2.1.3 (node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@2.1.3: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/webpack-dev-server/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+npm WARN optional SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.13 (node_modules/watchpack-chokidar2/node_modules/fsevents):
+npm WARN notsup SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.13: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+
++ vuetemplate@1.0.1
+added 62 packages from 142 contributors, removed 39 packages and audited 1334 packages in 45.657s
+
+54 packages are looking for funding
+  run `npm fund` for details
+
+found 0 vulnerabilities
+```
+Began to look into warnings and found [this](https://github.com/vuejs/vue-cli/issues/2862).
+
+`npm list -g --depth=0` returned error: 
+
+```
+/usr/lib
+├── @vue/cli@4.5.5
+├── npm@6.14.8
+└── npm-check-updates@9.0.2
+
+npm ERR! peer dep missing: vue@3.0.0-rc.10, required by @vue/compiler-sfc@3.0.0-rc.10
+```
+
+Followed advice and ran `chmod 777 /usr/lib`, which raised following warnings, to be followed into some more (fsevents is a known warning). 
+
+`npm run serve` to test Vue router, but errors thrown:
+
+```
+ ERROR  Failed to compile with 4 errors                        11:02:37 PM
+
+ error  in ./src/views/One.vue
+
+Module parse failed: Unexpected token (1:0)
+File was processed with these loaders:
+ * ./node_modules/eslint-loader/index.js
+You may need an additional loader to handle the result of these loaders.
+> <template>
+|     <div>
+| 
+
+ @ ./src/router/index.js 5:0-35 14:13-16
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://172.24.120.140:8080&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ error  in ./src/views/Page2.vue
+
+Module parse failed: Unexpected token (1:0)
+File was processed with these loaders:
+ * ./node_modules/eslint-loader/index.js
+You may need an additional loader to handle the result of these loaders.
+> <template>
+|   <div class="home">
+|     <img alt="Vue logo" src="../assets/logo.png">
+
+ @ ./src/router/index.js 4:0-39 18:13-18
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://172.24.120.140:8080&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ error  in ./src/views/Home.vue
+
+Module parse failed: Unexpected token (1:0)
+File was processed with these loaders:
+ * ./node_modules/eslint-loader/index.js
+You may need an additional loader to handle the result of these loaders.
+> <template>
+|   <div class="home">
+|     You're on the hook
+
+ @ ./src/router/index.js 3:0-37 10:13-17
+ @ ./src/main.js
+ @ multi (webpack)-dev-server/client?http://172.24.120.140:8080&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+ error  in ./src/App.vue
+
+Module parse failed: Unexpected token (1:0)
+File was processed with these loaders:
+ * ./node_modules/eslint-loader/index.js
+You may need an additional loader to handle the result of these loaders.
+> <template>
+|   <div id="app">
+|     <div id="nav">
+
+ @ ./src/main.js 6:0-28 17:13-16
+ @ multi (webpack)-dev-server/client?http://172.24.120.140:8080&sockPath=/sockjs-node (webpack)/hot/dev-server.js ./src/main.js
+
+```
 
 **ERROR**: Vue dev tools indicated that data.$route.query & data.$route.params are always empty read-only objects.
 
